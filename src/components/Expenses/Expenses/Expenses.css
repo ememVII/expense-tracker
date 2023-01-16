@@ -1,0 +1,13 @@
+.expenses {
+    margin: 1rem auto;
+    width: 50rem;
+    max-width: 95%;
+    padding: 1rem;
+    background-color: #fff;
+    border: 2px solid var(--font-color);
+    margin-bottom: 10rem;
+}
+
+ul {
+    list-style: none;
+}

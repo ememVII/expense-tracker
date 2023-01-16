@@ -1,0 +1,10 @@
+:root {
+    --font-color: #263751;
+    --borderBtn-color: #75b5c9;
+    --hover-color: #fe464e;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
