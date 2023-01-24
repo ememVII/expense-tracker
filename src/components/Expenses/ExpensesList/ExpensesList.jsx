@@ -13,9 +13,11 @@ export default function ExpensesList(props) {
       {props.expenses.map(expense => (
         <ExpensesItem
           key={expense.id}
+          id={expense.id}
           title={expense.title}
           price={expense.price}
           date={expense.date}
+          onDeleteBtn={props.onDeleteSubmit}
         />
       ))}
     </ul>

@@ -38,3 +38,7 @@
     border: solid 3px var(--hover-color);
     color: #fff;
 }
+
+.expense-item__deleteBtn {
+    border: none !important;
+}

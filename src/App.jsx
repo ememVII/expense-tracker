@@ -28,7 +28,7 @@ const staticData = [
     id: 3,
     title: 'Mouse',
     price: '18.99',
-    date : new Date('2021-09-15')
+    date : new Date('2021-10-15')
   },
   {
     id: 4,
@@ -40,7 +40,7 @@ const staticData = [
     id: 5,
     title: 'Sweatshirt',
     price: '74.99',
-    date : new Date('2022-09-15')
+    date : new Date('2022-10-07')
   }
 ]
 
@@ -51,11 +51,19 @@ function App() {
   const addNewExpense = (newExpense) => {
     setExpenses((prevExpenses) => [newExpense,...prevExpenses])
   }
-  
+
+  // Handler Delete Expense
+  const onDeleteHandler = (expenseID) => {
+    setExpenses((prevExpenses) => {
+      let deleteFilter = prevExpenses.filter((expense) => expense.id !== expenseID)
+      return deleteFilter
+    })
+  }
+
   return (
     <>
     <NewExpense onSendNewExpense={addNewExpense}/>
-    <Expenses expenses={expenses}/>
+    <Expenses expenses={expenses} onDelete={onDeleteHandler}/>
     <Footer/>
     </>
   )

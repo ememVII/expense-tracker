@@ -21,7 +21,7 @@ export default function Expenses(props) {
     <Card className="expenses">
       <ExpensesChart expenses={filteredExpenses}/>
       <ExpensesFilter selected={filteredYear} onFilterYear={onFilterYear} />
-      <ExpensesList expenses={filteredExpenses} />
+      <ExpensesList expenses={filteredExpenses} onDeleteSubmit={props.onDelete} />
     </Card>
   )
 }

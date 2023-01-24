@@ -1,41 +1,71 @@
-import React, { useState } from 'react'
-import './ExpensesForm.css'
+import React, { useState } from "react";
+import { useEffect } from "react";
+import Button from "../../UI/Button/Button";
+import ErrorModal from "../../UI/ErrorModal/ErrorModal";
+import "./ExpensesForm.css";
 
 export default function ExpensesForm(props) {
-  const [enteredTitle, setEnteredTitle] = useState('')
-  const [enteredPrice, setEnteredPrice] = useState('')
-  const [enteredDate, setEnteredDate] = useState('')
+  // setInput Data
+  const [enteredTitle, setEnteredTitle] = useState("");
+  const [enteredPrice, setEnteredPrice] = useState("");
+  const [enteredDate, setEnteredDate] = useState("");
+  // setError
+  const [error, setError] = useState();
 
-  const titleChangeHandler = e => {
-    setEnteredTitle(e.target.value)
-  }
+  const titleChangeHandler = (e) => {
+    setEnteredTitle(e.target.value);
+  };
 
-  const priceChangeHandler = e => {
-    setEnteredPrice(e.target.value)
-  }
+  const priceChangeHandler = (e) => {
+    setEnteredPrice(e.target.value);
+  };
 
-  const dateChangeHandler = e => {
-    setEnteredDate(e.target.value)
-  }
+  const dateChangeHandler = (e) => {
+    setEnteredDate(e.target.value);
+  };
 
-  const submitHandler = e => {
-    e.preventDefault()
+  const submitHandler = (e) => {
+    e.preventDefault();
+    // setErrors
+    if (
+      enteredTitle.trim().length === 0 ||
+      enteredPrice.trim().length === 0
+    ) {
+      setError({
+        title: "Missing Field !",
+        description: "Please Fill All Required Fields"
+      });
+      return;
+    }
+
+    if(+enteredPrice < 0.01) {
+      setError({
+        title: "Incorrect Price",
+        description: "Please write correct price > $0.01"
+      })
+      return
+    }
     const newExpense = {
       title: enteredTitle,
       price: +enteredPrice,
-      date: new Date(enteredDate)
-    }
+      date: new Date(enteredDate),
+    };
     // Sending Value to Parent
-    props.onSaveForm(newExpense)
+    props.onSaveForm(newExpense);
     // EmptyForm
-    setEnteredTitle('')
-    setEnteredPrice('')
-    setEnteredDate('')
+    setEnteredTitle("");
+    setEnteredPrice("");
+    setEnteredDate("");
+  };
+  // Close Error Modal
+  const onSubmit = () => {
+    setError(null)
   }
   
   return (
     <>
       <form onSubmit={submitHandler}>
+        {error && <ErrorModal title={error.title} description={error.description} onSubmit={onSubmit}/>}
         <div className="new-expense__controls">
           <div className="new-expense__control">
             <label htmlFor="title">Title: </label>
@@ -53,7 +83,6 @@ export default function ExpensesForm(props) {
               onChange={priceChangeHandler}
               value={enteredPrice}
               type="number"
-              min="0.01"
               step="0.01"
               name="price"
               id="price"
@@ -72,11 +101,15 @@ export default function ExpensesForm(props) {
             />
           </div>
           <div className="new-expense__btns">
-            <button type="button" onClick={props.onCancel}>Cancel</button>
-            <button type="submit">Add Expense</button>
+            <Button className="button" type="button" onClick={props.onCancel}>
+              Cancel
+            </Button>
+            <Button className="button" type="submit">
+              Add Expense
+            </Button>
           </div>
         </div>
       </form>
     </>
-  )
+  );
 }
